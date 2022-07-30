@@ -18,8 +18,8 @@ export class ConsoleKernel {
    */
   async register() {
     const result = await fileSearch("/*.command.(js|ts)", this.path, { maxDeep: 2, regExp: true });
-    for (let i = 0; i < result.length; i++) {
-      const { default: Command } = await import(`./${result[i].path}`);
+    for (const folder of result) {
+      const { default: Command } = await import(`./${folder.path}`);
       this.command.register(new Command());
     }
   }

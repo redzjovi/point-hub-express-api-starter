@@ -1,14 +1,14 @@
-import express, { Express } from "express";
-import Middleware from "@src/middleware/index.js";
-import router from "@src/router.js";
+import express from "express";
+import Middleware from "@src/middleware/index";
+import router from "@src/router";
 
-export async function createApp() {
-  const app: Express = express();
+export function createApp() {
+  const app = express();
 
   const middleware = new Middleware(app);
   middleware.registerBeforeRoutes();
 
-  app.use("/v1", await router());
+  app.use("/v1", router());
 
   middleware.registerAfterRoutes();
 
