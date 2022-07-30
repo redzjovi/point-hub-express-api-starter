@@ -1,0 +1,29 @@
+org: redzjovi
+app: point-hub-express-api-starter
+service: point-hub-express-api-starter
+frameworkVersion: "3"
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+
+provider:
+  name: aws
+  stage: dev
+  region: us-east-1
+  runtime: nodejs14.x
+
+functions:
+  api:
+    handler: src/index-serverless.handler
+    events:
+      - httpApi:
+          path: "/{proxy+}"
+          method: "*"
+
+package:
+  individually: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline

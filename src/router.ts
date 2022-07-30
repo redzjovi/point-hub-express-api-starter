@@ -1,17 +1,18 @@
-import { fileSearch } from "@point-hub/express-utils";
-import express, { Express } from "express";
+import { Router } from "express";
+import userRouter from "@src/modules/user/router";
 
-export default async function () {
-  const app: Express = express();
+export default function () {
+  const router = Router();
   /**
    * Register all available modules
    * <modules>/router.ts
    */
-  const routes = await fileSearch("router.ts", "./src/modules", { maxDeep: 1 });
-  routes.forEach(async (el) => {
-    const { default: router } = await import(`./modules/${el.key}/router.js`);
-    app.use(`/${el.key}`, router);
+  router.use("/user", userRouter);
+  router.get("/", (_, res) => {
+    res.json({
+      msg: "Hello World",
+    });
   });
 
-  return app;
+  return router;
 }
